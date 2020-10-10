@@ -26,7 +26,7 @@ def write_to_file(clipboard_data):
     # print(filename)
 
     with open(filename, 'a') as the_file:
-        the_file.write(timestamp + ":\t" + clipboard_data + "\n\n")
+        the_file.write(timestamp + ": " + clipboard_data + "\n\n")
 
 
 def on_press(key):
