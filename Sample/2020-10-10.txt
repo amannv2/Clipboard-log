@@ -1,0 +1,21 @@
+13:25:54:	Clipboard-log
+
+13:25:58:	Keep a daily log of your copied texts.
+
+13:26:01:	Tired of losing all the texts that you copied but forgot to paste somewhere? Checkout this simple python script that can resolve this issue.
+
+13:26:04:	How to run?
+
+13:26:08:	Clone the repo onto your desktop
+Run python main.py command
+Done. The script will keep running in the background.
+
+13:26:14:	Where to get logs?
+You can find all your copied text in location: C:\Clipboard-logs For a single day, all logs are present under same file like 2020-10-22
+
+Coming soon
+Add support for custom paths
+Capture text of cut action
+Capture metadata for copied multimedia files
+GUI
+
