@@ -8,22 +8,28 @@ from pynput.keyboard import Listener
 
 import values
 
+all_values = values.Values()
+
 
 def get_clipboard_data():
-    win32clipboard.OpenClipboard()
-    data = win32clipboard.GetClipboardData()
-    win32clipboard.CloseClipboard()
-    write_to_file(data)
+    try:
+        win32clipboard.OpenClipboard()
+        data = win32clipboard.GetClipboardData()
+        # print(type(data))
+        win32clipboard.CloseClipboard()
+        write_to_file(data)
+
+    except TypeError:
+        # if data is not textual
+        win32clipboard.CloseClipboard()
 
 
 def write_to_file(clipboard_data):
-    import values
     temp = str(date.today()) + '.txt'
-    filename = os.path.join(values.FILE_PATH, temp)
+    filename = all_values.get_file_path() + '\\' + temp
+    # print(filename)
     cur_time = datetime.now()
     timestamp = cur_time.strftime("%H:%M:%S")
-
-    # print(filename)
 
     with open(filename, 'a') as the_file:
         the_file.write(timestamp + ": " + clipboard_data + "\n\n")
@@ -31,22 +37,34 @@ def write_to_file(clipboard_data):
 
 def on_press(key):
     # print('{0} pressed'.format(key))
-    if key in values.COMBINATION:
-        time.sleep(0.6)
+    if key in all_values.get_combo():
+        sleep_wait(0.6)
         get_clipboard_data()
 
 
+def sleep_wait(seconds):
+    time.sleep(seconds)
+
+
 def validate_path(file_path):
-    if os.path.exists(file_path):
+    if file_path in all_values.get_path_not_allowed():
+        print('Permission denied! Please choose another location.')
+        return False
+    if os.path.isdir(file_path):
         return True
     return False
 
 
 def create_file_loc():
-    if not validate_path(values.FILE_PATH):
-        os.makedirs(values.FILE_PATH, 777)
+    if not validate_path(all_values.get_file_path()):
+        os.makedirs(all_values.get_file_path(), 777)
 
 
-if __name__ == '__main__':
+def update_settings():
+    pass
+
+
+# if __name__ == '__main__':
+def main():
     with Listener(on_press=on_press) as listener:
         listener.join()
