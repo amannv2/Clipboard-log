@@ -11,7 +11,7 @@ Tired of losing all the texts that you copied but forgot to paste somewhere? Che
 **NOTE:** To stop the script, open Windows Task Manager, look for `python.exe` in details tab and close that process
 
 ## Where to get logs?
-By default, you can find all your copied texts in location: C:\Clipboard-logs, otherwise they'll be stored at the specified location
+By default, you can find all your copied texts in location: `C:\Clipboard-logs`, otherwise they'll be stored at the specified location
 
 For a single day, all copied texts are present under same file like `2020-10-22.txt`
 
