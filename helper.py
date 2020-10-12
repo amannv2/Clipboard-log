@@ -1,14 +1,14 @@
-import os
 import time
 from datetime import date
 from datetime import datetime
 
 import win32clipboard
+from pynput import keyboard
 from pynput.keyboard import Listener
 
-import values
+from settings import get_path
 
-all_values = values.Values()
+COMBINATION = {keyboard.KeyCode.from_char('\x03')}
 
 
 def get_clipboard_data():
@@ -26,8 +26,8 @@ def get_clipboard_data():
 
 def write_to_file(clipboard_data):
     temp = str(date.today()) + '.txt'
-    filename = all_values.get_file_path() + '\\' + temp
-    # print(filename)
+    filename = get_path() + '\\' + temp
+    print(filename)
     cur_time = datetime.now()
     timestamp = cur_time.strftime("%H:%M:%S")
 
@@ -37,7 +37,7 @@ def write_to_file(clipboard_data):
 
 def on_press(key):
     # print('{0} pressed'.format(key))
-    if key in all_values.get_combo():
+    if key in COMBINATION:
         sleep_wait(0.6)
         get_clipboard_data()
 
@@ -46,25 +46,6 @@ def sleep_wait(seconds):
     time.sleep(seconds)
 
 
-def validate_path(file_path):
-    if file_path in all_values.get_path_not_allowed():
-        print('Permission denied! Please choose another location.')
-        return False
-    if os.path.isdir(file_path):
-        return True
-    return False
-
-
-def create_file_loc():
-    if not validate_path(all_values.get_file_path()):
-        os.makedirs(all_values.get_file_path(), 777)
-
-
-def update_settings():
-    pass
-
-
-# if __name__ == '__main__':
-def main():
+if __name__ == '__main__':
     with Listener(on_press=on_press) as listener:
         listener.join()
