@@ -17,6 +17,6 @@ For a single day, all copied texts are present under same file like `2020-10-22.
 
 ## Upcoming features
 1. Add support for custom paths ✅
-2. Capture text of cut action 
+2. Capture text of cut action ✅
 3. Capture metadata for copied multimedia files
 4. GUI
