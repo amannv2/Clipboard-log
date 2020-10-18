@@ -1,6 +1,7 @@
 import json
 import os
 
+FILE_NAME = 'settings.json'
 PATH_NOT_ALLOWED = {'C:', 'C:\\', 'C:\\\\', 'C:/', 'C://'}
 
 
@@ -19,45 +20,57 @@ def create_file_loc():
         os.makedirs(path, 777)
 
 
-def update_path(new_path):
-    with open('settings.json') as settings:
+def get_settings_data():
+    with open(FILE_NAME) as settings:
         data = json.load(settings)
-    data['FILE_PATH'] = new_path
+    return data
 
-    with open('settings.json', 'w') as settings:
-        json.dump(data, settings)
+
+def set_settings_data(new_data):
+    with open(FILE_NAME, 'w') as settings:
+        json.dump(new_data, settings)
+
+
+def update_path(new_path):
+    data = get_settings_data()
+    data['FILE_PATH'] = new_path
+    set_settings_data(data)
 
 
 def reset_path():
-    with open('settings.json') as settings:
-        data = json.load(settings)
+    data = get_settings_data()
     data['FILE_PATH'] = data['DEFAULT_PATH']
-
-    with open('settings.json', 'w') as settings:
-        json.dump(data, settings)
+    set_settings_data(data)
 
 
 def get_path():
-    with open('settings.json') as settings:
-        data = json.load(settings)
+    data = get_settings_data()
     return data['FILE_PATH']
 
 
 def get_default_path():
-    with open('settings.json') as settings:
-        data = json.load(settings)
+    data = get_settings_data()
     return data['DEFAULT_PATH']
 
 
 def first_launch():
-    with open('settings.json') as settings:
-        data = json.load(settings)
+    data = get_settings_data()
     return data['FIRST']
 
 
 def update_first_launch():
-    with open('settings.json') as settings:
-        data = json.load(settings)
+    data = get_settings_data()
     data['FIRST'] = False
-    with open('settings.json', 'w') as settings:
-        json.dump(data, settings)
+    set_settings_data(data)
+
+
+def add_to_startup():
+    data = get_settings_data()
+    data['STARTUP'] = True
+    set_settings_data(data)
+
+
+def remoe_from_startup():
+    data = get_settings_data()
+    data['STARTUP'] = False
+    set_settings_data(data)
